@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 13.8074
+height = 23.2811
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 555, 340 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 3.4764, 3.35293 )
+shape = SubResource( 1 )
+
+[node name="States" type="Node" parent="."]
