@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/levels/FullGroupSoccer_Cropped.jpg" type="Texture" id=2]
 [ext_resource path="res://levels/0/level_0.gd" type="Script" id=3]
-[ext_resource path="res://levels/drawer.gd" type="Script" id=4]
+[ext_resource path="res://levels/DrawingLayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Goal.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -24,6 +25,14 @@ __meta__ = {
 "_edit_horizontal_guides_": [ 3351.0 ]
 }
 
+[node name="BackgroundColor" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0.270588, 0.0627451, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Overlay" type="TextureRect" parent="."]
 material = SubResource( 2 )
 margin_right = 1920.0
@@ -35,7 +44,7 @@ __meta__ = {
 }
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 116, 91 )
+position = Vector2( 86, 133 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
@@ -45,14 +54,7 @@ limit_top = 0
 limit_right = 1920
 limit_bottom = 3355
 
-[node name="DrawingLayer" type="Viewport" parent="."]
-size = Vector2( 20, 20 )
-handle_input_locally = false
-disable_3d = true
-usage = 0
-render_target_v_flip = true
-render_target_clear_mode = 1
-render_target_update_mode = 3
+[node name="DrawingLayer" parent="." instance=ExtResource( 4 )]
 
-[node name="Drawer" type="Node2D" parent="DrawingLayer"]
-script = ExtResource( 4 )
+[node name="Goal" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1893, 168 )

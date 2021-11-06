@@ -31,7 +31,7 @@ func goto_scene(path, current_scene):
 			var progress = float(loader.get_stage())/loader.get_stage_count()
 			# TODO: Implement a progress bar
 			# loading_bar.value = progress * 100
-			print(progress)
+			Global.dprint(progress)
 		else:
 			print("Error while loading scene at path " + str(path), err)
 			break
