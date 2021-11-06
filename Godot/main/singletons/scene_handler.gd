@@ -1,5 +1,4 @@
 extends Node
-class_name SceneHandler
 
 export var max_load_time = 10000
 

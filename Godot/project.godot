@@ -8,24 +8,23 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Node",
-"class": "SceneHandler",
-"language": "GDScript",
-"path": "res://main/scripts/singletons/scene_handler.gd"
-} ]
-_global_script_class_icons={
-"SceneHandler": ""
-}
-
 [application]
 
 config/name="Burrow Under Ground"
+run/main_scene="res://levels/0/Level_0.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-SceneHandler="*res://main/scripts/singletons/scene_handler.gd"
+SceneHandler="*res://main/singletons/scene_handler.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=false
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_width"
 
 [input]
 
