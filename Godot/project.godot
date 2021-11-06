@@ -8,10 +8,51 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "SceneHandler",
+"language": "GDScript",
+"path": "res://main/scripts/singletons/scene_handler.gd"
+} ]
+_global_script_class_icons={
+"SceneHandler": ""
+}
+
 [application]
 
-config/name="gameoff2021"
+config/name="Burrow Under Ground"
 config/icon="res://icon.png"
+
+[autoload]
+
+SceneHandler="*res://main/scripts/singletons/scene_handler.gd"
+
+[input]
+
+move_left={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_up={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [  ]
+}
+jump={
+"deadzone": 0.5,
+"events": [  ]
+}
+attack={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [physics]
 
