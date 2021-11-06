@@ -38,12 +38,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 0.25, 0.25 )
-limit_left = 0
-limit_top = 0
-
 [node name="States" type="Node2D" parent="."]
 script = ExtResource( 4 )
 
