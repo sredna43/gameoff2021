@@ -8,10 +8,32 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Main",
+"language": "GDScript",
+"path": "res://main/main.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerFSM",
+"language": "GDScript",
+"path": "res://characters/player/scripts/fsm/state_machine.gd"
+}, {
+"base": "Node2D",
+"class": "PlayerState",
+"language": "GDScript",
+"path": "res://characters/player/scripts/fsm/state.gd"
+} ]
+_global_script_class_icons={
+"Main": "",
+"PlayerFSM": "",
+"PlayerState": ""
+}
+
 [application]
 
 config/name="Burrow Under Ground"
-run/main_scene="res://levels/0/Level_0.tscn"
+run/main_scene="res://main/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -60,3 +82,4 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false

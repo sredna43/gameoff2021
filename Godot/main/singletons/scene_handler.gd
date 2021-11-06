@@ -20,6 +20,7 @@ func goto_scene(path, current_scene):
 			# Loading complete
 			# TODO: Play the 100% loaded thingy
 			# loading_bar.show_fully_loaded()
+			# yield(loading_bar, "shown_fully_loaded")
 			var resource = loader.get_resource()
 			get_tree().get_root().call_deferred('add_child', resource.instance())
 			current_scene.queue_free()
