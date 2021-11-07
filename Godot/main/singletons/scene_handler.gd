@@ -11,6 +11,7 @@ func goto_scene(path, current_scene):
 		
 	var loading_bar = load("res://ui/splashes/LoadingScreen.tscn").instance()
 	get_tree().get_root().call_deferred("add_child", loading_bar)
+	current_scene.queue_free()
 	
 	var t = OS.get_ticks_msec()
 	
@@ -23,7 +24,6 @@ func goto_scene(path, current_scene):
 			# yield(loading_bar, "shown_fully_loaded")
 			var resource = loader.get_resource()
 			get_tree().get_root().call_deferred('add_child', resource.instance())
-			current_scene.queue_free()
 			loading_bar.queue_free()
 			break
 		elif err == OK:

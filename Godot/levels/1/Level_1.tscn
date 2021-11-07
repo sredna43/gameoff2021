@@ -50,7 +50,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="Level_0" type="Node2D"]
+[node name="Level_1" type="Node2D"]
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 3351.0 ]
@@ -89,10 +89,15 @@ drag_margin_v_enabled = true
 [node name="DrawingLayer" parent="." instance=ExtResource( 4 )]
 
 [node name="Goal" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1885, 540 )
+position = Vector2( 1855, 880 )
 
 [node name="Food" parent="." instance=ExtResource( 6 )]
-position = Vector2( 1021, 540 )
+position = Vector2( 617, 880 )
+calories = 175
+
+[node name="Food2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1470, 225 )
+calories = 175
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/start = SubResource( 3 )
