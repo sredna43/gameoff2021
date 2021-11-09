@@ -1,0 +1,106 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/fonts/VT323-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://ui/huds/hud.gd" type="Script" id=2]
+[ext_resource path="res://assets/textures/levels/FullGroupSoccer_Cropped.jpg" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=12]
+size = 64
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 128
+outline_size = 8
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=10]
+resource_name = "start"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("TopHUD/VBoxContainer/Text/ReadyGo:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "Smelling...", "Ready?", "Go!" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TopHUD/VBoxContainer/Text/ReadyGo:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5, 7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="TopHUD" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 278.0
+custom_constants/margin_right = 100
+custom_constants/margin_top = 50
+custom_constants/margin_left = 100
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TopHUD"]
+margin_left = 100.0
+margin_top = 50.0
+margin_right = 1820.0
+margin_bottom = 294.0
+custom_constants/separation = 50
+
+[node name="HungerBar" type="HBoxContainer" parent="TopHUD/VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 65.0
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="TopHUD/VBoxContainer/HungerBar"]
+margin_right = 182.0
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 12 )
+text = "Hunger:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="TextureProgress" parent="TopHUD/VBoxContainer/HungerBar"]
+margin_left = 202.0
+margin_right = 1702.0
+margin_bottom = 65.0
+value = 50.0
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
+stretch_margin_right = 1500
+
+[node name="Text" type="CenterContainer" parent="TopHUD/VBoxContainer"]
+margin_top = 115.0
+margin_right = 1720.0
+margin_bottom = 244.0
+
+[node name="ReadyGo" type="Label" parent="TopHUD/VBoxContainer/Text"]
+margin_left = 579.0
+margin_right = 1140.0
+margin_bottom = 129.0
+custom_fonts/font = SubResource( 9 )
+text = "Smelling..."
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/start = SubResource( 10 )
+__meta__ = {
+"_editor_description_": "Smelling..."
+}

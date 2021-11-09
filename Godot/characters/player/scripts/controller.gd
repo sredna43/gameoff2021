@@ -2,12 +2,12 @@ extends KinematicBody2D
 
 ### SETUP
 onready var state_machine = $States
-onready var hunger = get_parent().base_hunger
+onready var level = get_parent()
 
 func _ready():
 	state_machine.init(self)
 	position.y = 540
-	Global.dprint(hunger)
+	Global.dprint(Global.hunger)
 	
 func _physics_process(_delta):
 	if Global.playing:
@@ -29,8 +29,8 @@ func move():
 		velocity = dir
 	velocity *= speed
 	velocity = move_and_slide(velocity, Vector2.UP)
-	hunger -= abs(velocity.length() / (max_speed * speed))
-	if hunger <= 0:
+	Global.hunger -= abs(velocity.length() / (max_speed * speed))
+	if Global.hunger <= 0:
 		starved()
 
 
@@ -47,8 +47,8 @@ func starved():
 	Global.dprint("starved")
 
 func eat(calories):
-	hunger += calories
-	Global.dprint("Just ate " + str(calories) + " calories, hunger now at " + str(hunger))
+	Global.hunger += calories
+	Global.dprint("Just ate " + str(calories) + " calories, hunger now at " + str(Global.hunger))
 
 ### LOOKS
 onready var animation_player = $AnimationPlayer

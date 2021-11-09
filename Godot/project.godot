@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Level",
 "language": "GDScript",
-"path": "res://levels/base_level.gd"
+"path": "res://levels/level.gd"
 }, {
 "base": "Node2D",
 "class": "Main",

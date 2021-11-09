@@ -19,9 +19,8 @@ func goto_scene(path, current_scene):
 		var err = loader.poll()
 		if err == ERR_FILE_EOF:
 			# Loading complete
-			# TODO: Play the 100% loaded thingy
-			# loading_bar.show_fully_loaded()
-			# yield(loading_bar, "shown_fully_loaded")
+			loading_bar.show_fully_loaded()
+			yield(loading_bar, "shown_fully_loaded")
 			var resource = loader.get_resource()
 			get_tree().get_root().call_deferred('add_child', resource.instance())
 			loading_bar.queue_free()
@@ -29,8 +28,7 @@ func goto_scene(path, current_scene):
 		elif err == OK:
 			# Still loading
 			var progress = float(loader.get_stage())/loader.get_stage_count()
-			# TODO: Implement a progress bar
-			# loading_bar.value = progress * 100
+			loading_bar.update(progress * 100)
 			Global.dprint(progress)
 		else:
 			print("Error while loading scene at path " + str(path), err)

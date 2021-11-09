@@ -7,6 +7,7 @@ onready var bg: ColorRect = $BackgroundColor
 onready var drawer: Node2D = $DrawingLayer/Drawer
 onready var anim: AnimationPlayer = $AnimationPlayer
 onready var player = $Player
+onready var hud: CanvasLayer = $HUD
 var next_level
 
 var pressed = false
@@ -16,25 +17,27 @@ export var base_hunger = 250
 
 func _ready():
 	var next_level_num = str(int(name) + 1)
-	next_level = "res://levels/" + next_level_num  + "/Level_" + next_level_num + ".tscn"
+	#next_level = "res://levels/" + next_level_num  + "/Level_" + next_level_num + ".tscn"
+	next_level = "res://levels/0/Level_0.tscn"
 	var level_size = overlay.get_texture().get_size()
 	viewport.set_size(level_size)
 	overlay.set_size(level_size)
 	bg.set_size(level_size)
 	anim.play("start")
 	player.connect("winner", self, "win_level")
+	Global.hunger = base_hunger
+	Global.max_hunger = base_hunger
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		pressed = event.is_pressed()
 
 func _physics_process(_delta):
-		if pressed and Global.get_playing():
-			drawer.draw_at(player.position)
-		#yield(VisualServer, "frame_post_draw")
-		var texture = viewport.get_texture()
-		overlay.material.set_shader_param("mask_texture", texture)
-			
+	if pressed and Global.get_playing():
+		drawer.draw_at(player.position)
+	#yield(VisualServer, "frame_post_draw")
+	var texture = viewport.get_texture()
+	overlay.material.set_shader_param("mask_texture", texture)
 
 func start():
 	Global.set_playing(true)
