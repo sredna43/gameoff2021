@@ -8,7 +8,11 @@ onready var drawer: Node2D = $DrawingLayer/Drawer
 onready var anim: AnimationPlayer = $AnimationPlayer
 onready var player = $Player
 onready var hud: CanvasLayer = $HUD
-var next_level
+onready var blackout: ColorRect = $Blackout
+onready var next_level_num: String = str(int(name) + 1)
+onready var next_level: String = "res://levels/%s/Level_%s.tscn" % [next_level_num, next_level_num]
+onready var this_level_num: String = str(int(name))
+onready var this_level: String = "res://levels/%s/Level_%s.tscn" % [this_level_num, this_level_num]
 
 var pressed = false
 
@@ -16,15 +20,16 @@ var pressed = false
 export var base_hunger = 250
 
 func _ready():
-	var next_level_num = str(int(name) + 1)
-	#next_level = "res://levels/" + next_level_num  + "/Level_" + next_level_num + ".tscn"
 	next_level = "res://levels/0/Level_0.tscn"
 	var level_size = overlay.get_texture().get_size()
 	viewport.set_size(level_size)
 	overlay.set_size(level_size)
 	bg.set_size(level_size)
+	blackout.show()
+	blackout.set_self_modulate(Color(1, 1, 1, 1))
 	anim.play("start")
 	player.connect("winner", self, "win_level")
+	player.connect("starved", self, "starved")
 	Global.hunger = base_hunger
 	Global.max_hunger = base_hunger
 	
@@ -35,7 +40,6 @@ func _input(event):
 func _physics_process(_delta):
 	if pressed and Global.get_playing():
 		drawer.draw_at(player.position)
-	#yield(VisualServer, "frame_post_draw")
 	var texture = viewport.get_texture()
 	overlay.material.set_shader_param("mask_texture", texture)
 
@@ -45,3 +49,13 @@ func start():
 func win_level():
 	Global.set_playing(false)
 	SceneHandler.goto_scene(next_level, self)
+	
+func starved():
+	Global.set_playing(false)
+	hud.lose_game("You starved :(")
+	anim.play("starved")
+	yield(anim, "animation_finished")
+	restart_level()
+
+func restart_level():
+	SceneHandler.goto_scene(this_level, self)

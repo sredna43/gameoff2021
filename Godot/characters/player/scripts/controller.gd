@@ -3,11 +3,12 @@ extends KinematicBody2D
 ### SETUP
 onready var state_machine = $States
 onready var level = get_parent()
+onready var anim = $AnimationPlayer
 
 func _ready():
 	state_machine.init(self)
 	position.y = 540
-	Global.dprint(Global.hunger)
+	Global.dprint("Starting hunger: " + str(Global.hunger))
 	
 func _physics_process(_delta):
 	if Global.playing:
@@ -45,17 +46,17 @@ func goal_entered():
 func starved():
 	emit_signal("starved")
 	Global.dprint("starved")
+	anim.play("die")
 
 func eat(calories):
 	Global.hunger += calories
 	Global.dprint("Just ate " + str(calories) + " calories, hunger now at " + str(Global.hunger))
 
 ### LOOKS
-onready var animation_player = $AnimationPlayer
 
 func play_animation(animation):
-	if animation_player.current_animation == animation:
+	if anim.current_animation == animation:
 		return
 	else:
-		animation_player.play(animation)
+		anim.play(animation)
 

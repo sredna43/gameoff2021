@@ -8,7 +8,7 @@ func _ready():
 	
 func enter(player):
 	Global.dprint("Entering " + tag)
-	player.animation_player.playback_speed = 1
+	player.anim.playback_speed = 1
 	player.play_animation(tag)
 	pass
 	

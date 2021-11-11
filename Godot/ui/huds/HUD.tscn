@@ -16,32 +16,31 @@ outline_size = 8
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=10]
-resource_name = "start"
-length = 7.0
+[sub_resource type="Animation" id=13]
+resource_name = "fade_out_top_text"
 tracks/0/type = "value"
-tracks/0/path = NodePath("TopHUD/VBoxContainer/Text/ReadyGo:text")
+tracks/0/path = NodePath("TopHUD/VBoxContainer/Text/ReadyGo:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 3, 5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ "Smelling...", "Ready?", "Go!" ]
+"values": [ true, false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("TopHUD/VBoxContainer/Text/ReadyGo:self_modulate")
+tracks/1/path = NodePath("TopHUD/VBoxContainer/Text/ReadyGo:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 5, 7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="HUD" type="CanvasLayer"]
@@ -61,7 +60,7 @@ __meta__ = {
 margin_left = 100.0
 margin_top = 50.0
 margin_right = 1820.0
-margin_bottom = 294.0
+margin_bottom = 426.0
 custom_constants/separation = 50
 
 [node name="HungerBar" type="HBoxContainer" parent="TopHUD/VBoxContainer"]
@@ -90,17 +89,41 @@ stretch_margin_right = 1500
 [node name="Text" type="CenterContainer" parent="TopHUD/VBoxContainer"]
 margin_top = 115.0
 margin_right = 1720.0
-margin_bottom = 244.0
+margin_bottom = 376.0
 
 [node name="ReadyGo" type="Label" parent="TopHUD/VBoxContainer/Text"]
 margin_left = 579.0
 margin_right = 1140.0
+margin_bottom = 261.0
+custom_fonts/font = SubResource( 9 )
+text = "Sniffing...
+"
+
+[node name="MiddleHUD" type="MarginContainer" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="MiddleHUD"]
+margin_right = 1920.0
+margin_bottom = 129.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MiddleHUD/CenterContainer"]
+margin_left = 603.0
+margin_right = 1317.0
+margin_bottom = 129.0
+
+[node name="CenteredText" type="Label" parent="MiddleHUD/CenterContainer/VBoxContainer"]
+margin_right = 714.0
 margin_bottom = 129.0
 custom_fonts/font = SubResource( 9 )
-text = "Smelling..."
+text = "You starved :("
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/start = SubResource( 10 )
+anims/fade_out_top_text = SubResource( 13 )
 __meta__ = {
 "_editor_description_": "Smelling..."
 }
