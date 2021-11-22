@@ -7,6 +7,7 @@ func _ready():
 
 func _input(event):
 	if (event is InputEventKey or event is InputEventMouseButton) and event.pressed:
+		SoundEffects.play_sound("start_game")
 		anim.play("start_game")
 		MusicPlayer.fade_out()
 		yield(anim, "animation_finished")

@@ -8,6 +8,10 @@ func play_sound(sound: String):
 		$Crunch.play()
 	if sound == "sniff":
 		$Sniff.play()
+	if sound == "click":
+		$Click.play()
+	if sound == "start_game":
+		$StartGame.play()
 		
 func stop_sounds():
 	$Crunch.stop()

@@ -1,18 +1,28 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sounds/sound_effects.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/effects/scratch.wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/sounds/effects/crunch4.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/sounds/effects/sniff.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/effects/click.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/sounds/effects/start_game.wav" type="AudioStream" id=6]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Crunch" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+volume_db = -2.921
 
 [node name="Sniff" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 
 [node name="Move" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="StartGame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -3.506

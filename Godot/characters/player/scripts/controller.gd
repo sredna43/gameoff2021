@@ -63,6 +63,7 @@ signal starved
 signal at_end
 
 func goal_entered():
+	SoundEffects.play_sound("click")
 	emit_signal("winner")
 	Global.set_playing(false)
 	play_animation("idle")
