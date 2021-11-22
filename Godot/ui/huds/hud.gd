@@ -3,7 +3,7 @@ extends CanvasLayer
 onready var top_hud = $TopHUD
 onready var middle_hud = $MiddleHUD
 onready var top_text = $TopHUD/VBoxContainer/Text/ReadyGo
-onready var hunger_bar = $TopHUD/VBoxContainer/HungerBar/ProgressBar
+onready var hunger_bar = $TopHUD/VBoxContainer/CenterContainer/HungerBar/ProgressBar
 onready var middle_text = $MiddleHUD/CenterContainer/VBoxContainer/CenteredText
 onready var anim = $AnimationPlayer
 
@@ -43,7 +43,7 @@ func set_middle_text(text: String) -> void:
 func fade_out_top_text() -> void:
 	anim.play("fade_out_top_text")
 
-func lose_game(reason: String = "You starved :(", current_level: String = "") -> void:
+func lose_game(reason: String = "You starved :(", _current_level: String = "") -> void:
 	middle_text.text = reason
 	top_hud.hide()
 	middle_hud.show()

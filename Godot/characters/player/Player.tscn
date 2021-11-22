@@ -4,25 +4,7 @@
 [ext_resource path="res://characters/player/scripts/fsm/states/move.gd" type="Script" id=2]
 [ext_resource path="res://characters/player/scripts/fsm/states/idle.gd" type="Script" id=3]
 [ext_resource path="res://characters/player/scripts/fsm/state_machine.gd" type="Script" id=4]
-
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 21.0
-height = 0.0
-
-[sub_resource type="Animation" id=5]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("ColorRect:rect_size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 40, 40 ) ]
-}
+[ext_resource path="res://assets/textures/characters/player/Ant.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=4]
 resource_name = "die"
@@ -52,7 +34,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ColorRect:rect_size")
+tracks/2/path = NodePath(".:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -61,38 +43,62 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 40, 40 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "move"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 3, 4, 5 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 25.0
+height = 28.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_horizontal_guides_": [ 35.0, -20.0 ]
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 5 )
 anims/die = SubResource( 4 )
 anims/idle = SubResource( 2 )
 anims/move = SubResource( 3 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 10 )
+rotation = 1.5708
+shape = SubResource( 1 )
 
 [node name="States" type="Node2D" parent="."]
 script = ExtResource( 4 )
@@ -102,3 +108,9 @@ script = ExtResource( 3 )
 
 [node name="Move" type="Node2D" parent="States"]
 script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 6 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 5 )
+hframes = 6

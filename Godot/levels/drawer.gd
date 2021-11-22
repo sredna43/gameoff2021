@@ -4,7 +4,7 @@ var draw_pos = null
 
 func _draw():
 	if !draw_pos: return
-	draw_circle(draw_pos, 40, Color.white)
+	draw_circle(draw_pos, 25, Color.white)
 
 func _process(_delta):
 	pass

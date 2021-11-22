@@ -2,6 +2,12 @@ extends Node
 
 export var max_load_time = 10000
 
+func goto_scene_no_loading(path, current_scene):
+	var next_scene = load(path).instance()
+	current_scene.queue_free()
+	get_tree().get_root().call_deferred("add_child", next_scene)
+
+
 func goto_scene(path, current_scene):
 	var loader = ResourceLoader.load_interactive(path)
 	

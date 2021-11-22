@@ -1,5 +1,4 @@
 extends Node2D
-class_name Level
 
 onready var viewport: Viewport = $DrawingLayer
 onready var overlay: TextureRect = $Overlay
@@ -13,41 +12,48 @@ onready var next_level_num: String = str(int(name) + 1)
 onready var next_level: String = "res://levels/%s/Level_%s.tscn" % [next_level_num, next_level_num]
 onready var this_level_num: String = str(int(name))
 onready var this_level: String = "res://levels/%s/Level_%s.tscn" % [this_level_num, this_level_num]
+onready var start_pos: Position2D = $Positions/Start
+onready var end_pos: Position2D = $Positions/End
 
 var pressed = false
 
-# Total distance is roughly base_hunger * 4
 export var base_hunger = 250
 
 func _ready():
 	next_level = "res://levels/0/Level_0.tscn"
-	var level_size = overlay.get_texture().get_size()
+	var level_size = Vector2(1920,1080)
 	viewport.set_size(level_size)
 	overlay.set_size(level_size)
 	bg.set_size(level_size)
 	blackout.show()
 	blackout.set_self_modulate(Color(1, 1, 1, 1))
+	player.position = start_pos.position
+	player.end_dest = end_pos.position
 	anim.play("start")
 	player.connect("winner", self, "win_level")
 	player.connect("starved", self, "starved")
 	Global.hunger = base_hunger
 	Global.max_hunger = base_hunger
+	MusicPlayer.switch_music("level")
+	SoundEffects.play_sound("sniff")
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		pressed = event.is_pressed()
 
 func _physics_process(_delta):
-	if pressed and Global.get_playing():
-		drawer.draw_at(player.position)
+	drawer.draw_at(player.global_head_position)
 	var texture = viewport.get_texture()
 	overlay.material.set_shader_param("mask_texture", texture)
+	SoundEffects.set_is_moving(pressed && Global.get_playing())
 
 func start():
 	Global.set_playing(true)
 	
 func win_level():
-	Global.set_playing(false)
+	anim.play("win")
+	yield(anim, "animation_finished")
+	yield(player, "at_end")
 	SceneHandler.goto_scene(next_level, self)
 	
 func starved():

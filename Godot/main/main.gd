@@ -4,5 +4,5 @@ class_name Main
 
 # Initialize game, display first scene
 func _ready():
-	SceneHandler.goto_scene("res://levels/0/Level_0.tscn", self)
+	SceneHandler.goto_scene_no_loading("res://ui/menus/MainMenu.tscn", self)
 	

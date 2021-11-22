@@ -10,11 +10,6 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
-"class": "Level",
-"language": "GDScript",
-"path": "res://levels/level.gd"
-}, {
-"base": "Node2D",
 "class": "Main",
 "language": "GDScript",
 "path": "res://main/main.gd"
@@ -30,7 +25,6 @@ _global_script_classes=[ {
 "path": "res://characters/player/scripts/fsm/state.gd"
 } ]
 _global_script_class_icons={
-"Level": "",
 "Main": "",
 "PlayerFSM": "",
 "PlayerState": ""
@@ -46,6 +40,8 @@ config/icon="res://icon.png"
 
 SceneHandler="*res://main/singletons/scene_handler.gd"
 Global="*res://main/singletons/global.gd"
+MusicPlayer="*res://sounds/MusicPlayer.tscn"
+SoundEffects="*res://sounds/SoundEffects.tscn"
 
 [display]
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objects/food.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/objects/Apple.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30, 30 )
+[sub_resource type="CircleShape2D" id=4]
+radius = 23.0054
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -55,23 +56,18 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -30.0
-margin_top = -30.0
-margin_right = 30.0
-margin_bottom = 30.0
-color = Color( 0.192157, 0.8, 0.121569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
+position = Vector2( -1, 2.5 )
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
 anims/eaten = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1.25, 1.25 )
+texture = ExtResource( 2 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Food_entered"]
