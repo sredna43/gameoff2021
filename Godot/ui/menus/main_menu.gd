@@ -3,6 +3,9 @@ extends Control
 onready var anim = $AnimationPlayer
 
 func _ready():
+	# For HTML, delay music start
+	if OS.get_name() == "HTML5":
+		yield(get_tree().create_timer(1), "timeout")
 	MusicPlayer.switch_music("menu")
 
 func _input(event):
