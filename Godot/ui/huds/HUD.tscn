@@ -7,8 +7,8 @@
 [ext_resource path="res://assets/textures/uis/HungerBar_Under.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=9]
-size = 128
-outline_size = 8
+size = 64
+outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
 
@@ -57,7 +57,7 @@ __meta__ = {
 margin_left = 100.0
 margin_top = 20.0
 margin_right = 1820.0
-margin_bottom = 411.0
+margin_bottom = 283.0
 custom_constants/separation = 50
 
 [node name="CenterContainer" type="CenterContainer" parent="TopHUD/VBoxContainer"]
@@ -65,10 +65,10 @@ margin_right = 1720.0
 margin_bottom = 80.0
 
 [node name="HungerBar" type="HBoxContainer" parent="TopHUD/VBoxContainer/CenterContainer"]
-margin_left = 260.0
-margin_right = 1460.0
+margin_left = 28.0
+margin_right = 1692.0
 margin_bottom = 80.0
-custom_constants/separation = 20
+custom_constants/separation = 100
 
 [node name="ProgressBar" type="TextureProgress" parent="TopHUD/VBoxContainer/CenterContainer/HungerBar"]
 margin_right = 1200.0
@@ -78,15 +78,23 @@ texture_under = ExtResource( 5 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 4 )
 
+[node name="ApplesLeftLabel" type="Label" parent="TopHUD/VBoxContainer/CenterContainer/HungerBar"]
+margin_left = 1300.0
+margin_top = 7.0
+margin_right = 1664.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 9 )
+text = "Apples Left: 5"
+
 [node name="Text" type="CenterContainer" parent="TopHUD/VBoxContainer"]
 margin_top = 130.0
 margin_right = 1720.0
-margin_bottom = 391.0
+margin_bottom = 263.0
 
 [node name="ReadyGo" type="Label" parent="TopHUD/VBoxContainer/Text"]
-margin_left = 579.0
-margin_right = 1140.0
-margin_bottom = 261.0
+margin_left = 717.0
+margin_right = 1003.0
+margin_bottom = 133.0
 custom_fonts/font = SubResource( 9 )
 text = "Sniffing...
 "
@@ -101,16 +109,16 @@ __meta__ = {
 
 [node name="CenterContainer" type="CenterContainer" parent="MiddleHUD"]
 margin_right = 1920.0
-margin_bottom = 129.0
+margin_bottom = 65.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MiddleHUD/CenterContainer"]
-margin_left = 603.0
-margin_right = 1317.0
-margin_bottom = 129.0
+margin_left = 778.0
+margin_right = 1142.0
+margin_bottom = 65.0
 
 [node name="CenteredText" type="Label" parent="MiddleHUD/CenterContainer/VBoxContainer"]
-margin_right = 714.0
-margin_bottom = 129.0
+margin_right = 364.0
+margin_bottom = 65.0
 custom_fonts/font = SubResource( 9 )
 text = "You starved :("
 

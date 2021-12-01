@@ -30,6 +30,7 @@ func fade_out():
 	tween.interpolate_property(stream_player, "volume_db", 0, -80, transition_duration, transition_type, Tween.EASE_IN, 0)
 	tween.start()
 	fade = "out"
+	current_track = ""
 	
 
 func _on_Tween_tween_completed(object, _key):

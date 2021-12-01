@@ -6,6 +6,7 @@ onready var top_text = $TopHUD/VBoxContainer/Text/ReadyGo
 onready var hunger_bar = $TopHUD/VBoxContainer/CenterContainer/HungerBar/ProgressBar
 onready var middle_text = $MiddleHUD/CenterContainer/VBoxContainer/CenteredText
 onready var anim = $AnimationPlayer
+onready var apples_left_label = $TopHUD/VBoxContainer/CenterContainer/HungerBar/ApplesLeftLabel
 
 func _ready() -> void:
 	middle_hud.hide()
@@ -33,6 +34,7 @@ func toggle_middle_hud(override: String = "") -> void:
 
 func _physics_process(_delta):
 	hunger_bar.value = (Global.hunger / Global.max_hunger) * 100
+	apples_left_label.text = "Apples Left: " + str(Global.apples_left)
 	
 func set_top_text(text: String) -> void:
 	top_text.text = text

@@ -1,0 +1,259 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/textures/levels/Level_4.png" type="Texture" id=2]
+[ext_resource path="res://levels/level.gd" type="Script" id=3]
+[ext_resource path="res://levels/DrawingLayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Goal.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/Food.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/huds/HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/textures/levels/Level_BG.png" type="Texture" id=8]
+[ext_resource path="res://assets/textures/levels/Level_4_walls.png" type="Texture" id=9]
+[ext_resource path="res://assets/textures/levels/FinishLine.png" type="Texture" id=10]
+
+[sub_resource type="Animation" id=8]
+resource_name = "start"
+length = 5.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Blackout:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Blackout:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("HUD")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 5.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "\"show\"" ],
+"method": "toggle_top_hud"
+}, {
+"args": [  ],
+"method": "fade_out_top_text"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("HUD")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 3, 5.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ "Sniffing..." ],
+"method": "set_top_text"
+}, {
+"args": [ "Ready?" ],
+"method": "set_top_text"
+}, {
+"args": [ "Go!" ],
+"method": "set_top_text"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Player/Camera2D:zoom")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 3, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 0.3, 0.3 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 5.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "starved"
+length = 3.0
+
+[sub_resource type="Animation" id=11]
+resource_name = "win"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player:won")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+
+void fragment() {
+	COLOR.rgb = texture(TEXTURE, UV).rgb;
+	COLOR.a = 1.0 - texture(mask_texture, UV).r;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[node name="Level_4" type="Node2D"]
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_horizontal_guides_": [ 3351.0 ]
+}
+base_hunger = 225
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/start = SubResource( 8 )
+anims/starved = SubResource( 9 )
+anims/win = SubResource( 11 )
+
+[node name="HUD" parent="." instance=ExtResource( 7 )]
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0.45098, 0.243137, 0.223529, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Overlay" type="TextureRect" parent="."]
+material = SubResource( 2 )
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DrawingLayer" parent="." instance=ExtResource( 4 )]
+
+[node name="Foods" type="Node2D" parent="."]
+
+[node name="Food4" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 199, 555 )
+
+[node name="Food7" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 254, 134 )
+
+[node name="Food5" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 725, 175 )
+
+[node name="Food9" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 1199, 492 )
+
+[node name="Food11" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 1529, 363 )
+
+[node name="Food6" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 1771, 126 )
+
+[node name="Food8" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 1754, 807 )
+
+[node name="Food12" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 1387, 955 )
+
+[node name="Food10" parent="Foods" instance=ExtResource( 6 )]
+position = Vector2( 646, 737 )
+
+[node name="Goal" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1048, 1157 )
+
+[node name="Positions" type="Node2D" parent="."]
+
+[node name="Start" type="Position2D" parent="Positions"]
+position = Vector2( 208, 898 )
+
+[node name="End" type="Position2D" parent="Positions"]
+position = Vector2( 1059, 1309 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+scale = Vector2( 8, 8 )
+polygon = PoolVector2Array( 239, 134, 141, 134, 141, 129, 142, 129, 142, 128, 143, 128, 143, 122, 144, 122, 144, 119, 143, 119, 143, 117, 142, 117, 142, 115, 141, 115, 141, 107, 142, 107, 142, 106, 143, 106, 143, 104, 144, 104, 144, 103, 145, 103, 145, 101, 146, 101, 146, 98, 147, 98, 147, 97, 148, 97, 148, 95, 149, 95, 149, 94, 150, 94, 150, 93, 156, 93, 156, 94, 158, 94, 158, 95, 159, 95, 159, 96, 160, 96, 160, 97, 162, 97, 162, 98, 164, 98, 164, 99, 165, 99, 165, 100, 167, 100, 167, 101, 168, 101, 168, 102, 170, 102, 170, 103, 171, 103, 171, 104, 172, 104, 172, 111, 171, 111, 171, 113, 170, 113, 170, 114, 169, 114, 169, 115, 168, 115, 168, 119, 167, 119, 167, 120, 166, 120, 166, 121, 165, 121, 165, 122, 164, 122, 164, 123, 165, 123, 165, 124, 169, 124, 169, 125, 170, 125, 170, 126, 171, 126, 171, 127, 172, 127, 172, 126, 174, 126, 174, 125, 178, 125, 178, 126, 181, 126, 181, 127, 187, 127, 187, 126, 188, 126, 188, 125, 189, 125, 189, 124, 193, 124, 193, 125, 198, 125, 198, 126, 200, 126, 200, 127, 202, 127, 202, 128, 203, 128, 203, 130, 204, 130, 204, 131, 207, 131, 207, 130, 208, 130, 208, 129, 219, 129, 219, 128, 220, 128, 220, 127, 221, 127, 221, 126, 224, 126, 224, 125, 226, 125, 226, 124, 227, 124, 227, 122, 226, 122, 226, 117, 227, 117, 227, 116, 228, 116, 228, 114, 229, 114, 229, 113, 230, 113, 230, 106, 231, 106, 231, 101, 232, 101, 232, 100, 231, 100, 231, 99, 230, 99, 230, 98, 229, 98, 229, 97, 228, 97, 228, 95, 227, 95, 227, 94, 226, 94, 226, 92, 225, 92, 225, 89, 226, 89, 226, 86, 227, 86, 227, 83, 228, 83, 228, 79, 229, 79, 229, 77, 230, 77, 230, 70, 229, 70, 229, 69, 228, 69, 228, 68, 227, 68, 227, 67, 225, 67, 225, 66, 223, 66, 223, 65, 221, 65, 221, 62, 220, 62, 220, 61, 215, 61, 215, 60, 208, 60, 208, 59, 206, 59, 206, 58, 204, 58, 204, 57, 203, 57, 203, 56, 202, 56, 202, 55, 201, 55, 201, 54, 200, 54, 200, 53, 199, 53, 199, 52, 198, 52, 198, 51, 197, 51, 197, 50, 196, 50, 196, 48, 197, 48, 197, 44, 196, 44, 196, 43, 195, 43, 195, 42, 194, 42, 194, 41, 193, 41, 193, 40, 192, 40, 192, 39, 190, 39, 190, 34, 191, 34, 191, 25, 192, 25, 192, 23, 193, 23, 193, 22, 194, 22, 194, 21, 196, 21, 196, 20, 201, 20, 201, 21, 202, 21, 202, 22, 204, 22, 204, 23, 205, 23, 205, 24, 206, 24, 206, 31, 205, 31, 205, 32, 206, 32, 206, 33, 207, 33, 207, 34, 210, 34, 210, 33, 211, 33, 211, 32, 213, 32, 213, 31, 214, 31, 214, 30, 215, 30, 215, 29, 216, 29, 216, 27, 217, 27, 217, 26, 218, 26, 218, 25, 219, 25, 219, 24, 220, 24, 220, 23, 222, 23, 222, 22, 225, 22, 225, 23, 228, 23, 228, 22, 229, 22, 229, 19, 230, 19, 230, 17, 231, 17, 231, 14, 230, 14, 230, 13, 229, 13, 229, 12, 228, 12, 228, 11, 225, 11, 225, 10, 224, 10, 224, 9, 223, 9, 223, 8, 222, 8, 222, 7, 221, 7, 221, 8, 215, 8, 215, 7, 212, 7, 212, 6, 210, 6, 210, 5, 209, 5, 209, 4, 206, 4, 206, 5, 205, 5, 205, 6, 203, 6, 203, 7, 197, 7, 197, 8, 195, 8, 195, 9, 194, 9, 194, 10, 193, 10, 193, 11, 192, 11, 192, 12, 191, 12, 191, 13, 179, 13, 179, 14, 175, 14, 175, 15, 174, 15, 174, 16, 173, 16, 173, 17, 171, 17, 171, 18, 170, 18, 170, 21, 171, 21, 171, 22, 172, 22, 172, 24, 173, 24, 173, 25, 174, 25, 174, 29, 175, 29, 175, 30, 176, 30, 176, 34, 175, 34, 175, 35, 174, 35, 174, 36, 173, 36, 173, 37, 172, 37, 172, 40, 173, 40, 173, 45, 172, 45, 172, 47, 171, 47, 171, 49, 170, 49, 170, 50, 169, 50, 169, 51, 168, 51, 168, 52, 166, 52, 166, 53, 165, 53, 165, 54, 163, 54, 163, 55, 159, 55, 159, 56, 153, 56, 153, 55, 152, 55, 152, 53, 151, 53, 151, 52, 150, 52, 150, 51, 149, 51, 149, 50, 148, 50, 148, 46, 147, 46, 147, 45, 146, 45, 146, 42, 147, 42, 147, 39, 148, 39, 148, 38, 149, 38, 149, 37, 150, 37, 150, 35, 153, 35, 153, 34, 154, 34, 154, 32, 153, 32, 153, 31, 152, 31, 152, 30, 151, 30, 151, 24, 152, 24, 152, 20, 153, 20, 153, 18, 154, 18, 154, 16, 153, 16, 153, 15, 152, 15, 152, 14, 150, 14, 150, 15, 141, 15, 141, 14, 140, 14, 140, 13, 139, 13, 139, 12, 138, 12, 138, 11, 137, 11, 137, 10, 135, 10, 135, 11, 131, 11, 131, 10, 128, 10, 128, 9, 126, 9, 126, 8, 123, 8, 123, 9, 121, 9, 121, 10, 120, 10, 120, 11, 119, 11, 119, 12, 110, 12, 110, 11, 108, 11, 108, 10, 105, 10, 105, 11, 103, 11, 103, 12, 95, 12, 95, 11, 92, 11, 92, 12, 91, 12, 91, 13, 90, 13, 90, 14, 89, 14, 89, 15, 87, 15, 87, 16, 85, 16, 85, 17, 84, 17, 84, 18, 82, 18, 82, 19, 79, 19, 79, 20, 78, 20, 78, 21, 77, 21, 77, 24, 76, 24, 76, 25, 75, 25, 75, 27, 74, 27, 74, 29, 73, 29, 73, 32, 72, 32, 72, 33, 71, 33, 71, 34, 70, 34, 70, 35, 69, 35, 69, 36, 67, 36, 67, 37, 63, 37, 63, 38, 60, 38, 60, 39, 57, 39, 57, 38, 55, 38, 55, 37, 54, 37, 54, 36, 53, 36, 53, 35, 52, 35, 52, 31, 51, 31, 51, 28, 50, 28, 50, 25, 49, 25, 49, 24, 48, 24, 48, 21, 49, 21, 49, 17, 50, 17, 50, 15, 51, 15, 51, 14, 52, 14, 52, 13, 53, 13, 53, 12, 52, 12, 52, 11, 49, 11, 49, 10, 46, 10, 46, 9, 43, 9, 43, 8, 35, 8, 35, 9, 31, 9, 31, 8, 29, 8, 29, 7, 28, 7, 28, 6, 26, 6, 26, 7, 23, 7, 23, 8, 20, 8, 20, 9, 17, 9, 17, 10, 16, 10, 16, 12, 17, 12, 17, 14, 16, 14, 16, 15, 15, 15, 15, 16, 14, 16, 14, 17, 13, 17, 13, 18, 12, 18, 12, 19, 13, 19, 13, 21, 14, 21, 14, 26, 13, 26, 13, 29, 14, 29, 14, 30, 15, 30, 15, 31, 16, 31, 16, 32, 17, 32, 17, 33, 19, 33, 19, 32, 20, 32, 20, 31, 22, 31, 22, 32, 24, 32, 24, 33, 26, 33, 26, 34, 27, 34, 27, 35, 28, 35, 28, 36, 29, 36, 29, 37, 30, 37, 30, 38, 31, 38, 31, 39, 32, 39, 32, 40, 34, 40, 34, 41, 35, 41, 35, 42, 36, 42, 36, 49, 35, 49, 35, 51, 34, 51, 34, 52, 33, 52, 33, 53, 32, 53, 32, 55, 31, 55, 31, 57, 30, 57, 30, 58, 28, 58, 28, 59, 27, 59, 27, 60, 22, 60, 22, 59, 19, 59, 19, 60, 18, 60, 18, 63, 17, 63, 17, 66, 18, 66, 18, 69, 17, 69, 17, 72, 18, 72, 18, 76, 17, 76, 17, 78, 16, 78, 16, 79, 17, 79, 17, 80, 18, 80, 18, 81, 19, 81, 19, 82, 20, 82, 20, 83, 21, 83, 21, 84, 26, 84, 26, 85, 27, 85, 27, 86, 28, 86, 28, 87, 29, 87, 29, 88, 30, 88, 30, 89, 31, 89, 31, 95, 30, 95, 30, 100, 29, 100, 29, 101, 28, 101, 28, 102, 27, 102, 27, 103, 26, 103, 26, 104, 19, 104, 19, 103, 17, 103, 17, 104, 16, 104, 16, 105, 15, 105, 15, 108, 14, 108, 14, 110, 13, 110, 13, 111, 12, 111, 12, 116, 11, 116, 11, 122, 12, 122, 12, 123, 13, 123, 13, 124, 17, 124, 17, 125, 19, 125, 19, 124, 22, 124, 22, 125, 27, 125, 27, 124, 29, 124, 29, 123, 30, 123, 30, 122, 32, 122, 32, 121, 33, 121, 33, 120, 35, 120, 35, 119, 36, 119, 36, 117, 37, 117, 37, 116, 38, 116, 38, 115, 39, 115, 39, 114, 44, 114, 44, 115, 46, 115, 46, 116, 47, 116, 47, 115, 48, 115, 48, 114, 49, 114, 49, 113, 50, 113, 50, 112, 51, 112, 51, 111, 52, 111, 52, 109, 54, 109, 54, 108, 55, 108, 55, 107, 56, 107, 56, 106, 58, 106, 58, 105, 59, 105, 59, 104, 70, 104, 70, 103, 72, 103, 72, 104, 74, 104, 74, 105, 76, 105, 76, 106, 77, 106, 77, 111, 78, 111, 78, 119, 77, 119, 77, 122, 78, 122, 78, 123, 79, 123, 79, 124, 85, 124, 85, 125, 88, 125, 88, 124, 92, 124, 92, 125, 93, 125, 93, 126, 95, 126, 95, 125, 96, 125, 96, 124, 97, 124, 97, 123, 105, 123, 105, 124, 106, 124, 106, 125, 107, 125, 107, 126, 110, 126, 110, 127, 112, 127, 112, 128, 113, 128, 113, 129, 114, 129, 114, 131, 115, 131, 115, 134, 1, 134, 1, 1, 239, 1 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Walls"]
+scale = Vector2( 8, 8 )
+polygon = PoolVector2Array( 91, 48, 92, 48, 92, 49, 93, 49, 93, 50, 94, 50, 94, 51, 97, 51, 97, 52, 98, 52, 98, 53, 99, 53, 99, 54, 100, 54, 100, 55, 101, 55, 101, 56, 103, 56, 103, 55, 104, 55, 104, 54, 106, 54, 106, 53, 109, 53, 109, 54, 111, 54, 111, 55, 112, 55, 112, 56, 114, 56, 114, 55, 116, 55, 116, 56, 117, 56, 117, 57, 119, 57, 119, 58, 120, 58, 120, 57, 127, 57, 127, 58, 128, 58, 128, 60, 129, 60, 129, 63, 130, 63, 130, 69, 129, 69, 129, 70, 128, 70, 128, 71, 127, 71, 127, 72, 126, 72, 126, 73, 125, 73, 125, 76, 124, 76, 124, 79, 123, 79, 123, 80, 122, 80, 122, 83, 121, 83, 121, 89, 120, 89, 120, 90, 119, 90, 119, 92, 118, 92, 118, 93, 117, 93, 117, 94, 116, 94, 116, 95, 111, 95, 111, 96, 110, 96, 110, 97, 109, 97, 109, 98, 107, 98, 107, 99, 105, 99, 105, 100, 100, 100, 100, 99, 99, 99, 99, 98, 98, 98, 98, 97, 97, 97, 97, 95, 96, 95, 96, 92, 95, 92, 95, 90, 94, 90, 94, 89, 93, 89, 93, 88, 92, 88, 92, 81, 91, 81, 91, 80, 90, 80, 90, 74, 89, 74, 89, 73, 84, 73, 84, 72, 83, 72, 83, 71, 82, 71, 82, 69, 81, 69, 81, 68, 80, 68, 80, 67, 79, 67, 79, 64, 78, 64, 78, 63, 77, 63, 77, 61, 78, 61, 78, 57, 79, 57, 79, 56, 80, 56, 80, 53, 81, 53, 81, 51, 82, 51, 82, 50, 86, 50, 86, 49, 87, 49, 87, 48, 88, 48, 88, 47, 91, 47 )
+
+[node name="LevelOverlay" type="Sprite" parent="."]
+scale = Vector2( 8, 8 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="FinishLine" type="Sprite" parent="."]
+position = Vector2( 1037, 999 )
+rotation = -0.146608
+scale = Vector2( 2, 2 )
+texture = ExtResource( 10 )
+
+[node name="WallsSprite" type="Sprite" parent="."]
+scale = Vector2( 8, 8 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 208, 899 )
+won = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+drag_margin_v_enabled = true
+
+[node name="Blackout" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

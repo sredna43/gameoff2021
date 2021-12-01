@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/textures/objects/Apple.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 23.0054
+radius = 29.0043
 
 [sub_resource type="Animation" id=2]
 length = 0.001

@@ -6,6 +6,7 @@ onready var bg: ColorRect = $BackgroundColor
 onready var drawer: Node2D = $DrawingLayer/Drawer
 onready var anim: AnimationPlayer = $AnimationPlayer
 onready var player = $Player
+onready var camera = $Player/Camera2D
 onready var hud: CanvasLayer = $HUD
 onready var blackout: ColorRect = $Blackout
 onready var next_level_num: String = str(int(name) + 1)
@@ -14,14 +15,15 @@ onready var this_level_num: String = str(int(name))
 onready var this_level: String = "res://levels/%s/Level_%s.tscn" % [this_level_num, this_level_num]
 onready var start_pos: Position2D = $Positions/Start
 onready var end_pos: Position2D = $Positions/End
+onready var foods: Node2D = $Foods
 
 var pressed = false
+var level_score = 0
 
 export var base_hunger = 250
+export var level_size = Vector2(1920,1080)
 
 func _ready():
-	next_level = "res://levels/0/Level_0.tscn"
-	var level_size = Vector2(1920,1080)
 	viewport.set_size(level_size)
 	overlay.set_size(level_size)
 	bg.set_size(level_size)
@@ -36,6 +38,7 @@ func _ready():
 	Global.max_hunger = base_hunger
 	MusicPlayer.switch_music("level")
 	SoundEffects.play_sound("sniff")
+	Global.apples_left = foods.get_child_count()
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
@@ -52,9 +55,15 @@ func start():
 	
 func win_level():
 	anim.play("win")
+	camera.zoom = Vector2(1, 1)
 	yield(anim, "animation_finished")
 	yield(player, "at_end")
-	SceneHandler.goto_scene(next_level, self)
+	Global.total_score += Global.level_score
+	if int(this_level_num) == Global.last_level:
+		next_level = "res://ui/menus/EndGameMenu.tscn"
+		SceneHandler.goto_scene_no_loading(next_level, self)
+	else:
+		SceneHandler.goto_scene(next_level, self)
 	
 func starved():
 	Global.set_playing(false)

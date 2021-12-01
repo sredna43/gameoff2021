@@ -74,13 +74,16 @@ func set_starved():
 		starved = true
 	emit_signal("starved")
 	Global.dprint("starved")
+	Global.level_score -= 25
 	anim.play("die")
 
 func eat(calories):
-	Global.hunger += calories
+	Global.hunger = clamp(Global.hunger + calories, 0, Global.max_hunger)
 	Global.dprint("Just ate " + str(calories) + " calories, hunger now at " + str(Global.hunger))
 	starved = false
 	start_pos = position
+	Global.apples_left -= 1
+	Global.level_score += 100
 	
 func update_hunger():
 	Global.hunger -= (abs(velocity.length() / (max_speed * speed))) * 0.6

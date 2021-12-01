@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/levels/Level_0.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://objects/Food.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/huds/HUD.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/textures/levels/Level_BG.png" type="Texture" id=8]
+[ext_resource path="res://assets/textures/levels/FinishLine.png" type="Texture" id=9]
 
 [sub_resource type="Animation" id=8]
 resource_name = "start"
@@ -106,6 +107,7 @@ length = 3.0
 
 [sub_resource type="Animation" id=11]
 resource_name = "win"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player:won")
 tracks/0/interp = 1
@@ -188,10 +190,16 @@ position = Vector2( 960, 540 )
 scale = Vector2( 8, 8 )
 polygon = PoolVector2Array( 120, -17.5, 117.75, -17.75, 111, -28.875, 103, -30.125, 101.25, -27.875, 92.5, -28.875, 87.75, -29.875, 84.375, -31.75, 76.375, -25.375, 73.625, -23, 61.625, -23.875, 56.5, -20.25, 41.375, -20.875, 36, -15.5, 31.125, -15.625, 23.375, -21.75, 15.125, -21, 10.75, -16, 4.75, -15.75, 3.125, -17.125, -5.875, -21, -13.375, -20.375, -25.375, -22.125, -31, -18.375, -37, -19.125, -44.5, -20.375, -49.25, -20.75, -52.875, -17.125, -58.625, -17, -63, -20, -66.875, -17, -74.875, -18.5, -79.625, -22.75, -93.375, -16.75, -103.875, -16.375, -107.5, -16, -109, -0.375, -104.125, 9.25, -96.875, 11.875, -90.875, 13.625, -88, 15.5, -86.75, 17.125, -84.5, 17, -83, 15, -81.25, 14.5, -71.25, 15.375, -68.25, 17.125, -64, 18.25, -59.875, 18.5, -52.75, 16.125, -48.375, 17, -44.25, 17, -40.875, 14.875, -36.875, 14.625, -31.875, 17.5, -24.875, 14.375, -19.125, 14, -10, 16.875, 7.25, 17.25, 10, 13.625, 17.625, 14, 19.75, 16.25, 42.625, 16.375, 44.375, 14, 49.875, 14.125, 55.625, 17, 59.25, 13.5, 66.625, 12.625, 80.75, 12, 86.75, 11.75, 89.5, 13.375, 94, 9.875, 100.625, 12, 107, 10.625, 111.125, 13.625, 119.875, 14, 120, 67.5, -120, 67.5, -120, -67.5, 120, -67.5 )
 
+[node name="FinishLine" type="Sprite" parent="."]
+position = Vector2( 1850, 511 )
+rotation = -1.5865
+scale = Vector2( 2, 2 )
+texture = ExtResource( 9 )
+
 [node name="LevelOverlay" type="Sprite" parent="."]
-position = Vector2( 960, 540 )
 scale = Vector2( 8, 8 )
 texture = ExtResource( 2 )
+centered = false
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 208, 534 )
